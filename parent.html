@@ -1,0 +1,26 @@
+<html>
+  <head>
+    <script src='iframeRpc.js'></script>
+    <script>
+      let rpc = plemont.IframeRpc.create(this);
+
+      add = function(x, y) {
+        return x + y;
+      }
+
+      function tryExec() {
+        rpc.execute('iFrame', 'multiply', [5, 10])
+            .then(result => {
+              console.log(result);
+            })
+            .catch(error => {
+              console.log('Error:' + error);
+            });
+      }
+    </script>
+  </head>
+  <body>
+    <iframe id='iFrame' src='iframe.html'></iframe>
+    <button onclick="tryExec();">Multiply within iFrame child</button>
+  </body>
+</html>
