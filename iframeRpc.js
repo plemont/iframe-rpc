@@ -54,7 +54,8 @@ plemont.IframeRpc = class {
 
       let listener = window.addEventListener('message',
           event => {
-            if (event.data.requestId === message.requestId &&
+            if (event.origin === window.location.origin &&
+                event.data.requestId === message.requestId &&
                 event.data.targetId === this.sourceId_ &&
                 event.data.sourceId === message.targetId &&
                 event.data.type === 'response') {
@@ -83,7 +84,9 @@ plemont.IframeRpc = class {
    */
   messageHandler(event) {
     let data = event.data;
-    if (data.targetId === this.sourceId_ && data.type === 'request') {
+    if (event.origin === window.location.origin &&
+        data.targetId === this.sourceId_ &&
+        data.type === 'request') {
       let message = {
         type: 'response',
         requestId: data.requestId,
